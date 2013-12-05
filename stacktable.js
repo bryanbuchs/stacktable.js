@@ -17,7 +17,7 @@
         settings = $.extend({}, defaults, options);
 
     return $tables.each(function() {
-      var $stacktable = $('<table class="'+settings.id+'"><tbody></tbody></table>');
+      var $stacktable = $('<table class="'+ settings.id +'"></table>');
       if (typeof settings.myClass !== undefined) $stacktable.addClass(settings.myClass);
       var markup = '';
       $table = $(this);
@@ -25,11 +25,12 @@
       $table.find('tr').each(function(index,value) {
         // for the first row, top left table cell is the head of the table
         if (index===0) {
-          markup += '<tr><th class="st-head-row st-head-row-main" colspan="2">'+$(this).find('th,td').eq(0).html()+'</th></tr>';
+          markup += '<thead><tr><th class="st-head-row st-head-row-main" colspan="2">'+$(this).find('th,td').eq(0).html()+'</th></tr></thead>';
         }
         // for the other rows, put the left table cell as the head for that row
         // then iterate through the key/values
         else {
+          markup += '<tbody>';
           $(this).find('td').each(function(index,value) {
             if (index===0) {
               markup += '<tr><th class="st-head-row" colspan="2">'+$(this).html()+'</th></tr>';
@@ -46,6 +47,7 @@
               }
             }
           });
+          markup += '</tbody>';
         }
       });
       $stacktable.append($(markup));
