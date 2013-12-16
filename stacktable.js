@@ -26,15 +26,15 @@
       var $stacktable = $('<table class="' + settings.classname + '"></table>'),
         markup = '',
         $table = $(this),
-        $topRow = $table.find('tr').eq(0);
+        $header = $table.find('thead').eq(0).find('tr').eq(0);
 
-      $table.find('tr').each(function (index) {
+      $table.find('tbody').find('tr').each(function (index) {
         markup += '<tbody>';
         $(this).find('td').each(function (index) {
           if ($(this).html() !== '') {
             markup += '<tr>';
-            if ($topRow.find('td,th').eq(index).html()) {
-              markup += '<td class="' + settings.key + '">' + $topRow.find('td,th').eq(index).html() + '</td>';
+            if ($header.find('td,th').eq(index).html()) {
+              markup += '<td class="' + settings.key + '">' + $header.find('td,th').eq(index).html() + '</td>';
             } else {
               markup += '<td class="' + settings.key + '"></td>';
             }
