@@ -14,39 +14,36 @@
   $.fn.stacktable = function (options) {
     var $tables = this,
       defaults = {
-        classname: 'stacktable',
-        hideOriginal: false,
-        title: 'st-title',
-        key: 'st-key',
-        val: 'st-val'
+        classname: 'stacktable'
       },
       settings = $.extend({}, defaults, options);
 
     return $tables.each(function () {
+
       var $stacktable = $('<table class="' + settings.classname + '"></table>'),
         markup = '',
         $table = $(this),
         $headers = $table.find('thead').eq(0).children().eq(0);
 
-      $table.find('tbody').children().each(function (index) {
-        markup += '<tbody>';
-        $(this).children().each(function (index) {
-          if ($(this).html() !== '') {
-            markup += '<tr>';
-            if ($headers.children().eq(index).html()) {
-              markup += '<td class="' + settings.key + '">' + $headers.children().eq(index).html() + '</td>';
-            } else {
-              markup += '<td class="' + settings.key + '"></td>';
-            }
-            markup += '<td class="' + settings.val + '">' + $(this).html() + '</td>';
-            markup += '</tr>';
-          }
-        });
-        markup += '</tbody>';
-      });
+        if ($headers.length) {
 
-      $stacktable.append($(markup));
-      $table.before($stacktable);
+          $table.find('tbody').children().each(function (index) {
+            markup += '<tbody>';
+            $(this).children().each(function (index) {
+              if ($(this).html() !== '') {
+                markup += '<tr>';
+                markup += '<th>' + $headers.children().eq(index).text() + '</th>';
+                markup += '<td>' + $(this).html() + '</td>';
+                markup += '</tr>';
+              }
+            });
+            markup += '</tbody>';
+          });
+
+          $stacktable.append($(markup));
+          $table.addClass('is-' + settings.classname).before($stacktable);
+
+        }
 
     });
   };
